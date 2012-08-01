@@ -1,0 +1,40 @@
+.navbar .nav>li>span{
+	float:none;
+	padding:10px 10px 11px;
+	line-height:19px;
+	color:#999999;
+	text-decoration:none;
+	text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
+	cursor: pointer;
+}
+
+.navbar .nav>li>span:hover{
+	color:#ffffff;
+	text-decoration:none;
+	background-color:#222222;
+}
+
+.nav>li>span{
+	display:block;
+}
+
+#tchat{
+	background-color: #ffffff;
+	width:830px;
+	height:70px;
+	margin-left: 20px;
+	overflow-y:auto;
+}
+
+.live {
+position: absolute;
+color: white;
+z-index: 1;
+font-weight: 600;
+font-family: Arial;
+font-size: 12pt;
+left: 5px;
+top: 38px;
+text-shadow: 1px 1px red;
+letter-spacing: 1px;
+}
