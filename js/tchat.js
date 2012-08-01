@@ -1,13 +1,11 @@
-/////////////////////////////////////////
 // Javascript file used to make a chat //
-/////////////////////////////////////////
 
 /**
  * Retrieve messages directly on server
  * @param {array} messages : array containing all messages that were written on the server
  * @return {void}
  */
-recupererMessages = function (messages) {
+loadMessages = function (messages) {
 	var html = '';
 	var tchat = $('#tchat');
 	for (var i = 0; i < messages.length; i++) {
@@ -20,10 +18,10 @@ recupererMessages = function (messages) {
 
 /**
  * If somebody send a new message, the server send message 
- * @param {array} messages : array containing all messages that were written on the server
+ * @param {array} message : message that were written on the server
  * @return {void}
  */	
-recupererNouveauMessage = function (message) {
+loadNewMessages = function (message) {
 	var tchat = $('#tchat');
 	var html = tchat.html();
 	html += '<div class="line"><b>'+message.nickname+'</b> : '+message.message+'</div>';
@@ -42,8 +40,8 @@ setHeight = function(elt) {
 }
 	
 /**
- * When we want to send a message 
- * Retrieve message, call the event to save the message and brodcast it to the other users
+ * When we want to send a message need to retrieve message, 
+ * call the event to save the message and brodcast it to the other users
  * Display the message into your web page
  * Clean the input
  * @return {false} to not not refresh the page
@@ -54,7 +52,7 @@ $(function() {
 		var message = $('#mess').val();
 		var tchat = $('#tchat');
 		
-		socket.emit('nouveauMessage', { 'nickname' : $('#username').text(), 'message' : message });
+		socket.emit('newMessage', { 'nickname' : $('#username').text(), 'message' : message });
 		
 		var html = tchat.html();
 		html += '<div class="line"><b>'+$('#username').text()+'</b> : '+message+'</div>';

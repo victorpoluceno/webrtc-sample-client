@@ -1,18 +1,15 @@
-///////////////////////////////////
 // Server Node.js with socket.IO //
-///////////////////////////////////
 
 /**
- * Declare the server HTTP
- * listen to the port 8888
+ * Declare the server HTTP listen to the port 8888
  */
 var http = require("http");
+
 var server = http.createServer();
 var app = server.listen(8888);
 
 /**
- * Import socket.io module
- * on the server HTTP
+ * Import socket.io module on the server HTTP
  */
 var io = require('socket.io').listen(app);
 
@@ -25,8 +22,6 @@ var messages = new Array();
 * When a user connects
 */
 io.sockets.on('connection', function (client) {
-
-	//-- Variables declarations--//
 	var initiator = true;
 	var room = '';
 
@@ -43,8 +38,7 @@ io.sockets.on('connection', function (client) {
 	});
 
 	/**
-	 * If you are the first user to connect 
-	 * create room
+	 * If you are the first user to connect create room
 	 */
 	if(initiator){
 		room = Math.floor(Math.random()*1000001).toString();
@@ -63,7 +57,7 @@ io.sockets.on('connection', function (client) {
     });
 
     /**
-	 * When a user changes for a next slide
+	 * When a user changes for a previous slide
 	 * broadcast to all users in the room
 	 */
     client.on('prevSlide', function() {
@@ -71,7 +65,7 @@ io.sockets.on('connection', function (client) {
     });
 
     /**
-	 * When a user changes for a previous slide
+	 * When a user changes for a next slide
 	 * broadcast to all users in the room
 	 */
     client.on('nextSlide', function() {
@@ -81,23 +75,22 @@ io.sockets.on('connection', function (client) {
     /**
 	 * List of messages (chat)
 	 */
-	client.emit('recupererMessages', messages[room]);
+	client.emit('loadMessages', messages[room]);
 
 	/**
-	 * When we receive a new message (chat)
-	 * add to the array
+	 * When we receive a new message (chat) add to the array
 	 * broadcast to all users in the room
 	 */
-	client.on('nouveauMessage', function (mess) {
-		messages[room].push(mess);
-		client.broadcast.to(room).emit('recupererNouveauMessage', mess);
+	client.on('newMessage', function (message) {
+		messages[room].push(message);
+		client.broadcast.to(room).emit('loadNewMessages', message);
 	});
 
 	/**
 	 * When the user hang up
 	 * broadcast bye signal to all users in the room
 	 */
- 	client.on('exit',function(){
+ 	client.on('exit', function(){
     	client.broadcast.to(room).emit('bye');
   	});
 
@@ -105,7 +98,7 @@ io.sockets.on('connection', function (client) {
 	 * When the user close the application
 	 * broadcast close signal to all users in the room
 	 */
-  	client.on('disconnect',function(){
+  	client.on('disconnect', function(){
     	client.broadcast.to(room).emit('close');
   	});
 });

@@ -1,6 +1,4 @@
-/////////////////////////////////////////////////////////////////
 // Javascript file used to make a visio call between 2 clients //
-/////////////////////////////////////////////////////////////////
 
 //-- Global variables declarations--//
 var localVideo;
@@ -42,15 +40,14 @@ initialize = function() {
  */
 openChannel = function() {
     socket = io.connect('http://localhost:8888/');
-
     socket
       .on('connect', onChannelOpened)
       .on('message', onChannelMessage)
       .on('error', onChannelError)
       .on('bye', onChannelBye)
       .on('close', onChannelClosed)
-      .on('recupererMessages', recupererMessages)
-      .on('recupererNouveauMessage', recupererNouveauMessage)
+      .on('loadMessages', loadMessages)
+      .on('loadNewMessages', loadNewMessages)
       .on('prevSlide', remotePrev)
       .on('nextSlide', remoteNext);
      
