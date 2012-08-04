@@ -1,4 +1,4 @@
-// Server Node.js with socket.IO //
+// Server Node.js with socket.IO
 
 /**
  * Declare the server HTTP listen to the port 8888
@@ -12,11 +12,6 @@ var app = server.listen(8888);
  * Import socket.io module on the server HTTP
  */
 var io = require('socket.io').listen(app);
-
-/**
- * Declare the variable messages for the chat
- */
-var messages = new Array();
 
 /**
 * When a user connects
@@ -34,7 +29,6 @@ io.sockets.on('connection', function (client) {
 		room = invitation;
 		initiator = false;
 		client.join(room);
-		messages[room] = new Array();
 	});
 
 	/**
@@ -44,7 +38,6 @@ io.sockets.on('connection', function (client) {
 		room = Math.floor(Math.random()*1000001).toString();
 		client.emit('getRoom', {roomId : room});
 		client.join(room);
-		messages[room] = new Array();
 	}
 
 	/**
@@ -71,20 +64,6 @@ io.sockets.on('connection', function (client) {
     client.on('nextSlide', function() {
     	client.broadcast.to(room).emit('nextSlide');
     });
-
-    /**
-	 * List of messages (chat)
-	 */
-	client.emit('loadMessages', messages[room]);
-
-	/**
-	 * When we receive a new message (chat) add to the array
-	 * broadcast to all users in the room
-	 */
-	client.on('newMessage', function (message) {
-		messages[room].push(message);
-		client.broadcast.to(room).emit('loadNewMessages', message);
-	});
 
 	/**
 	 * When the user hang up
