@@ -1,4 +1,2 @@
 www:
   type: python
-  approot: app
-
