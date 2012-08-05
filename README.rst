@@ -16,10 +16,10 @@ setup
 
 How to setup on ubuntu 12.04::
 
-sudo apt-get install python-virtualenv
-virtualenv env
-source env/bin/activate
-pip install -r requirements.txt
+  sudo apt-get install python-virtualenv
+  virtualenv env
+  source env/bin/activate
+  pip install -r requirements.txt
 
 
 run
@@ -27,7 +27,7 @@ run
 
 Run on debug mode::
 
-python app/__init__.py
+  python app/__init__.py
 
 
 credits
