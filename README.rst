@@ -1,5 +1,5 @@
-WebRTC Sample
-=============
+WebRTC client sample
+====================
 
 
 requirements
@@ -7,13 +7,14 @@ requirements
 
 You have to install 
 
-- node.js 
 - python and virtualenv
-- Chrome or Chromium (please use the latest version of Chrome/Chromium Dev or Chrome Canary)
+- Chrome or Chromium (use the latest version of Chrome/Chromium Dev or Chrome Canary)
 
 
-setup web server
-----------------
+setup
+-----
+
+How to setup on ubuntu 12.04::
 
 sudo apt-get install python-virtualenv
 virtualenv env
@@ -21,25 +22,15 @@ source env/bin/activate
 pip install -r requirements.txt
 
 
-run web server
---------------
+run
+---
+
+Run on debug mode::
 
 python app/__init__.py
-
-
-setup signaling server
-----------------------
-
-sudo apt-get install node
-
-
-run signanling server
----------------------
-
-node nodejs_server/index.js
 
 
 credits
 -------
 
-Inspired by https://apprtc.appspot.com/ and Prototype WebRTC Project
+Inspired by https://apprtc.appspot.com/ and https://github.com/MouMou/EWP
