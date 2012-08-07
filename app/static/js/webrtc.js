@@ -46,8 +46,6 @@ openChannel = function() {
       .on('error', onChannelError)
       .on('bye', onChannelBye)
       .on('close', onChannelClosed)
-      .on('loadMessages', loadMessages)
-      .on('loadNewMessages', loadNewMessages)
       .on('prevSlide', remotePrev)
       .on('nextSlide', remoteNext);
      
@@ -152,7 +150,7 @@ setStatus = function(state) {
     $('#footer').html(state);
 }
 
-function doCall() {
+doCall = function() {
   console.log("Send offer to peer");
   var offer = pc.createOffer({audio:true, video:true});
   pc.setLocalDescription(pc.SDP_OFFER, offer);
@@ -160,7 +158,7 @@ function doCall() {
   pc.startIce();
 }
 
-function doAnswer() {
+doAnswer = function() {
   console.log("Send answer to peer");
   var offer = pc.remoteDescription;
   var answer = pc.createAnswer(offer.toSdp(), {audio:true,video:true});
@@ -169,13 +167,13 @@ function doAnswer() {
   pc.startIce();
 }
 
-function sendMessage(message) {
+sendMessage = function(message) {
   var msgString = JSON.stringify(message);
   console.log('C->S: ' + msgString);
   socket.send(msgString);
 }
 
-function processSignalingMessage(message) {
+processSignalingMessage = function(message) {
   var msg = JSON.parse(message);
 
   if (msg.type === 'offer') {
@@ -200,7 +198,7 @@ function processSignalingMessage(message) {
 
 // Temp solution for compatibility between Chrome 20 and later versions.
 // We need to convert the ICE candidate into old format at Chrome 20 end.
-function checkIceFormat(msgString) {
+checkIceFormat = function(msgString) {
   var ua = navigator.userAgent;
   if (ua.substr(ua.lastIndexOf('Chrome/')+7, 2) === '20') {
     // If the offer/answer is from later Chrome to Chrome 20
@@ -214,7 +212,7 @@ function checkIceFormat(msgString) {
 }
 
 // Save the ICE credentials in SDP from later Chrome at Chrome 20 end.
-function saveIceCredentials(msgString) {
+saveIceCredentials = function(msgString) {
   var indexOfAudioSdp = msgString.search('m=audio');
   var indexOfVideoSdp = msgString.search('m=video');
 
@@ -229,7 +227,7 @@ function saveIceCredentials(msgString) {
 
 
 // Add saved ICE credentials into candidate from later Chrome at Chrome 20 end.
-function maybeAddIceCredentials(msg) {
+maybeAddIceCredentials = function(msg) {
   var candidateString = msg.candidate;
   if (needFormatCandidate) {
     candidateString = msg.candidate.replace('generation',
@@ -391,13 +389,13 @@ onHangup = function() {
     setStatus("<div class=\"alert alert-info\">You have left the call.</div>");    
 }
 
-function onRemoteHangup() {
+onRemoteHangup = function() {
   console.log('Session terminated.');
   stop();
   initiator = 0;
 }
 
-function stop() {
+stop = function() {
   started = false;
   needFormatCandidate = false;
   pc.close();
