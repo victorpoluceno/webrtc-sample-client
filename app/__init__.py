@@ -1,11 +1,15 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, request
 
 app = Flask(__name__)
 
 @app.route("/")
 def main():
-	return render_template('index.html')	
+	room = request.args.get('room', '')
+	if room:
+		return render_template('watch.html')
+	
+	return render_template('index.html')
 
 
 if __name__ == "__main__":
